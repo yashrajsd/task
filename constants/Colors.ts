@@ -24,3 +24,19 @@ export const Colors = {
     tabIconSelected: tintColorDark,
   },
 };
+
+
+export type UserType={
+  uid:string,
+  name:string,
+  email:string,
+  image:string
+} 
+
+export type AuthContextType={
+  user:UserType | null;
+  setUser:Function;
+  login:(email:string,password:string)=>Promise<{success:boolean;msg?:string}>
+  register:(email:string,password:string,name:string)=>Promise<{success:boolean;msg?:string}>
+  updateUserData:(uid:string)=>Promise<void>
+}
