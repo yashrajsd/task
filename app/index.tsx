@@ -77,7 +77,7 @@ const Index = () => {
                     <TextInput
                         placeholder="Search items"
                         value={searchQuery}
-                        onChangeText={setSearchQuery} // ✅ Search updates instantly
+                        onChangeText={setSearchQuery} 
                         style={{
                             borderRadius: 10,
                             backgroundColor: '#FFF',
@@ -88,13 +88,13 @@ const Index = () => {
                         }}
                         placeholderTextColor="#CDCDCD"
                     />
-                    <TouchableOpacity style={{paddingHorizontal:20,borderRadius:10,backgroundColor:"#FF4B4B",paddingVertical: 15}}>
+                    <TouchableOpacity style={{paddingHorizontal:20,borderRadius:10,backgroundColor:"#FF4B4B",paddingVertical: 15}} onPress={handleLogOut}>
                         <Text style={{color:'white',fontWeight:'600'}}>Logout</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ flex: 1, backgroundColor: '#F6F6F6', padding: 10 }}>
                     <FlatList
-                        data={filteredProducts} // ✅ Search filtering applied here
+                        data={filteredProducts} 
                         keyExtractor={(item) => item.id.toString()}
                         renderItem={({ item }) => (
                             <TouchableOpacity style={{ marginBottom: 20, padding: 10, backgroundColor: 'white', borderRadius: 10, elevation: 2, height: 500 }} onPress={()=>{navigation.push(`/${item.id}`)}}>
