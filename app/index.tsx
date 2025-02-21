@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, ActivityIndicator, SafeAreaView, RefreshControl, Image, Text, TextInput, TouchableOpacity } from 'react-native';
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { useRouter } from 'expo-router';
 import { auth } from '@/config/firebase';
 import { Product } from '@/constants/product';
@@ -50,7 +50,15 @@ const Index = () => {
         setRefreshing(false);
     };
 
-    // **Search Filtering Without Changing fetchProducts Logic**
+    const handleLogOut=async()=>{
+        try {
+            await signOut(auth);
+            navigation.replace('/sign-in'); // Redirect user to sign-in screen
+        } catch (error) {
+            console.error('Error signing out:', error);
+        }
+    };
+
     const filteredProducts = searchQuery.trim()
         ? products.filter(product =>
             product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -65,7 +73,7 @@ const Index = () => {
     return (
         <View style={{ flex: 1, backgroundColor: 'white', paddingVertical: 20 }}>
             <SafeAreaView style={{ flex: 1 }}>
-                <View style={{ width: '100%', padding: 10, backgroundColor: '#F6F6F6', paddingVertical: 20 }}>
+                <View style={{ width: '100%', padding: 10, backgroundColor: '#F6F6F6', paddingVertical: 20,flexDirection:'row',alignItems:'center'}}>
                     <TextInput
                         placeholder="Search items"
                         value={searchQuery}
@@ -75,10 +83,14 @@ const Index = () => {
                             backgroundColor: '#FFF',
                             padding: 10,
                             paddingVertical: 15,
-                            fontWeight: '600'
+                            fontWeight: '600',
+                            flex:1
                         }}
                         placeholderTextColor="#CDCDCD"
                     />
+                    <TouchableOpacity style={{paddingHorizontal:20,borderRadius:10,backgroundColor:"#FF4B4B",paddingVertical: 15}}>
+                        <Text style={{color:'white',fontWeight:'600'}}>Logout</Text>
+                    </TouchableOpacity>
                 </View>
                 <View style={{ flex: 1, backgroundColor: '#F6F6F6', padding: 10 }}>
                     <FlatList
